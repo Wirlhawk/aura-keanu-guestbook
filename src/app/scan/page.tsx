@@ -6,6 +6,7 @@ import { Guest } from "@/types/supabase";
 import { createClient } from "@/utils/supabase/client";
 import toast from "react-hot-toast";
 import { AnimatePresence, motion } from "motion/react";
+import { addAttendance } from "@/action/attendance";
 
 const ScanPage = () => {
   const [guest, setGuest] = useState<Guest | null>(null);
@@ -56,6 +57,9 @@ const ScanPage = () => {
         setGuest(null);
         return;
       }
+
+      // add attendance
+      await addAttendance(guestId);
 
       toast.success("Tamu berhasil Check In");
       setGuest(data);

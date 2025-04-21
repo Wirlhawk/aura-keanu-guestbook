@@ -19,7 +19,7 @@ const ScanPage = () => {
     try {
       const { data, error, count } = await supabase
         .from("guests")
-        .select("*")
+        .select(" *")
         .eq("id", guestId)
         .single();
 
@@ -30,14 +30,34 @@ const ScanPage = () => {
         return;
       }
 
+      // check if guest exist
       if (!data || count === 0) {
         console.error("Error guests not found");
         toast.error("Tamu tidak ditemukan");
-
         return;
       }
 
-      toast.success("Sukses");
+      // check if guest already checkin
+      const { data: attendance, error: attendanceError } = await supabase
+        .from("attendance")
+        .select("*")
+        .eq("guest_id", guestId)
+        .single();
+
+      // attendance error
+      if (!attendanceError || attendance != null) {
+        toast.error("Tamu Sudah Check In");
+        setGuest(null);
+        return;
+      }
+
+      if (attendance != null) {
+        toast.error("Tamu Sudah Check In (2)");
+        setGuest(null);
+        return;
+      }
+
+      toast.success("Tamu berhasil Check In");
       setGuest(data);
     } catch (err) {
       console.error("Unexpected error:", err);
@@ -47,7 +67,7 @@ const ScanPage = () => {
   };
 
   return (
-    <div className="bg-white bg-[url('/assets/background/5.png')] h-[100lvh] w-full flex flex-row py-10 px-12 gap-15 font-forum relative font-forum">
+    <div className="h-[100lvh] w-full flex flex-row py-10 px-12 gap-15 font-forum relative font-forum">
       <ScannerSection onScan={onScan} />
       <WelcomeSection guest={guest} />
 
@@ -146,12 +166,21 @@ function GuestCard({ guest }: { guest: Guest }) {
       >
         <div className="bg-secondary flex flex-col items-center w-full py-5 px-4 gap-3">
           <h2 className="text-lg text-white">Yth. Bpk/Ibu/Sdr/i</h2>
-          <div>
-            <h1 className="text-2xl  font-bold text-yellow-500">
-              {guest.name}
-            </h1>
-            <p className="tracking-widest text-yellow-500 text-md">VIP GUEST</p>
-          </div>
+
+          {guest.vip === true ? (
+            <div>
+              <h1 className="text-2xl  font- text-yellow-500">{guest.name}</h1>
+              <p className="tracking-widest text-yellow-500 text-md">
+                VIP GUEST
+              </p>
+            </div>
+          ) : (
+            <div>
+              <h1 className="text-2xl  font- text-white">{guest.name}</h1>
+              <p className="text-white text-md">ID: {guest.id}</p>
+            </div>
+          )}
+
           <p className="px-10 text-white text-xs">
             Thank you for coming and sharing this special moment with us 💖
           </p>
@@ -164,6 +193,7 @@ function GuestCard({ guest }: { guest: Guest }) {
           alt=""
           className="absolute w-20 left-1/2 -translate-x-1/2 top-0 -translate-y-3/4"
         />
+
         <Image
           width={200}
           height={200}

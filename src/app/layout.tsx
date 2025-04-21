@@ -37,7 +37,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${forum.variable} antialiased font-forum`}>
+      <body
+        className={` ${forum.variable} antialiased font-forum bg-white bg-[url('/assets/background/5.png')]`}
+      >
         {children}
         <Toaster />
       </body>

@@ -39,7 +39,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={` ${forum.variable} ${geistMono.variable} ${geistSans.variable}antialiased font-forum bg-white bg-[url('/assets/background/5.png')]`}
+                className={` ${forum.variable} ${geistMono.variable} ${geistSans.variable} antialiased font-forum bg-white bg-[url('/assets/background/5.png')]`}
             >
                 <NextTopLoader showSpinner={false} />
                 {children}

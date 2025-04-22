@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default async function Home() {
     return (
-      <div className="h-screen w-full grid place-items-center py-10 relative">
+      <div className="h-[100dvh] w-full grid place-items-center py-10 relative">
         <div className="flex flex-col items-center gap-10 justify-between h-full">
           {/* header */}
           <div className="text-center flex flex-col">

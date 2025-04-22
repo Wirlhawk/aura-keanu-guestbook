@@ -55,7 +55,7 @@ export function DataTable<TData, TValue>({
     });
 
     return (
-        <>
+        <div>
             <div className="flex items-center py-4 justify-between">
                 <Input
                     placeholder="Filter..."
@@ -67,7 +67,7 @@ export function DataTable<TData, TValue>({
                 />
 
                 <Button asChild>
-                    <Link href="/">+ Add Guest</Link>
+                    <Link href="/admin/add">+ Add Guest</Link>
                 </Button>
             </div>
             <Table>
@@ -120,6 +120,6 @@ export function DataTable<TData, TValue>({
                 </TableBody>
             </Table>
             <DataTablePagination table={table} />
-        </>
+        </div>
     );
 }

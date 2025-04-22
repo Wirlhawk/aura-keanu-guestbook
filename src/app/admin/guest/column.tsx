@@ -16,7 +16,7 @@ import { Guest } from "@/types/supabase";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { addAttendance } from "@/action/attendance";
+import { addAttendance, removeAttendance } from "@/action/attendance";
 import toast from "react-hot-toast";
 
 export const columns: ColumnDef<Guest>[] = [
@@ -136,44 +136,64 @@ export const columns: ColumnDef<Guest>[] = [
             const id = row.getValue("id") as string;
             const name = row.getValue("name") as string;
 
-            if (attendance.length > 0) {
-                return "Already Attend";
-            }
-            return (
-                <AlertDialog>
-                    <AlertDialogTrigger asChild>
-                        <Button
-                            size={"sm"}
-                            variant="secondary"
-                            className="text-white"
-                        >
-                            Add To Attend List
-                        </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                        <AlertDialogHeader>
-                            <AlertDialogTitle>
-                                Add {name} to Attend List?
-                            </AlertDialogTitle>
-                            <AlertDialogDescription></AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                            <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction
-                                onClick={() => {
-                                    toast.promise(addAttendance(id), {
-                                        loading: "Adding guest to attend list",
-                                        success: "Guest added to attend list",
-                                        error: "error, guest could not be added",
-                                    });
-                                }}
-                            >
-                                Continue
-                            </AlertDialogAction>
-                        </AlertDialogFooter>
-                    </AlertDialogContent>
-                </AlertDialog>
-            );
-        },
+      
+      return attendance.length > 0 ? (
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button size={"sm"} variant="destructive" className="text-white bg-red-900">
+              Remove From Attend List
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Remove {name} to Attend List?</AlertDialogTitle>
+              <AlertDialogDescription></AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => {
+                  toast.promise(removeAttendance(id), {
+                    loading: "Adding guest to attend list",
+                    success: "Guest added to attend list",
+                    error: "error, guest could not be added",
+                  });
+                }}
+              >
+                Remove
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      ) : (
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button size={"sm"} variant="secondary" className="text-white">
+              Add To Attend List
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Add {name} to Attend List?</AlertDialogTitle>
+              <AlertDialogDescription></AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => {
+                  toast.promise(addAttendance(id), {
+                    loading: "Adding guest to attend list",
+                    success: "Guest added to attend list",
+                    error: "error, guest could not be added",
+                  });
+                }}
+              >
+                Continue
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      );
     },
+  },
 ];

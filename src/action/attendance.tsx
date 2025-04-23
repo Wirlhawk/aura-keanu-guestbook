@@ -6,10 +6,12 @@ import { revalidatePath } from "next/cache";
 export const addAttendance = async (guestId: string) => {
   try {
     const supabase = await createClient();
-
     const { data, error } = await supabase
       .from("attendance")
-      .insert({ guest_id: guestId });
+      .insert({ guest_id: guestId })
+      .select()
+      .single()
+
 
     if (error) {
       console.error("Error adding attendance:", error);

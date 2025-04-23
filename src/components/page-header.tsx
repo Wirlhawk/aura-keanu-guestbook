@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { Button } from "./ui/button";
-import { Home, Link } from "lucide-react";
-import { Separator } from "@radix-ui/react-select";
+import { Home } from "lucide-react";
+import Link from "next/link";
 
 const PageHeader = ({
   children,
@@ -14,15 +14,14 @@ const PageHeader = ({
 }) => {
   return (
     <div className="rounded-md border bg-white space-y-5 p-5 px-7">
-      <div className="flex gap-2">
+      <div className="flex gap-5">
         <Button asChild variant={"outline"}>
           <Link href="/">
             <Home />
             Menu
           </Link>
         </Button>
-
-        <Separator aria-orientation="vertical" />
+        {/* <Separator aria-orientation="vertical" /> */}
 
         <span className="flex gap-2 items-center">
           {icon}

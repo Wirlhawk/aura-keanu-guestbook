@@ -18,51 +18,41 @@ const ScanPage = () => {
     const supabase = createClient();
 
     try {
-      const { data, error, count } = await supabase
+      const { data: guest, error: guestError } = await supabase
         .from("guests")
-        .select(" *")
+        .select("*")
         .eq("id", guestId)
         .single();
 
-      if (error) {
-        console.error("Error fetching guest:", error.message);
+      if (guestError || !guest) {
+        console.error("Error fetching guest:", guestError?.message);
+        toast.error("Tamu tidak ditemukan");
+        setGuest(null);
+        return;
+      }
+
+      const { data: attendance, error: attendanceError } = await supabase
+        .from("attendance")
+        .select("*")
+        .eq("guest_id", guestId);
+
+      if (attendanceError) {
+        console.error("Error fetching attendance:", attendanceError.message);
         toast.error("Terjadi Kesalahan, silahkan coba lagi");
         setGuest(null);
         return;
       }
 
-      // check if guest exist
-      if (!data || count === 0) {
-        console.error("Error guests not found");
-        toast.error("Tamu tidak ditemukan");
-        return;
-      }
-
-      // check if guest already checkin
-      const { data: attendance, error: attendanceError } = await supabase
-        .from("attendance")
-        .select("*")
-        .eq("guest_id", guestId)
-        .single();
-
-      // attendance error
-      if (!attendanceError || attendance != null) {
+      if (attendance && attendance.length > 0) {
         toast.error("Tamu Sudah Check In");
         setGuest(null);
         return;
       }
 
-      if (attendance != null) {
-        toast.error("Tamu Sudah Check In (2)");
-        setGuest(null);
-        return;
-      }
-
-      // add attendance
       await addAttendance(guestId);
 
       toast.success("Tamu berhasil Check In");
-      setGuest(data);
+      setGuest(guest);
     } catch (err) {
       console.error("Unexpected error:", err);
       toast.error("Terjadi Kesalahan, silahkan coba lagi");
@@ -71,7 +61,7 @@ const ScanPage = () => {
   };
 
   return (
-    <div className="h-[100lvh] w-full flex flex-row py-10 px-12 gap-15 font-forum relative font-forum">
+    <div className="h-[100lvh] w-full flex flex-col sm:flex-row py-10 px-12 gap-15 font-forum relative font-forum">
       <ScannerSection onScan={onScan} />
       <WelcomeSection guest={guest} />
 
@@ -99,7 +89,7 @@ function ScannerSection({
   onScan: (result: IDetectedBarcode[]) => void;
 }) {
   return (
-    <div className="w-1/2 flex flex-col items-center text-center my-auto">
+    <div className="sm:w-1/2 flex flex-col items-center text-center my-auto">
       <div className=" p-5 rounded">
         <Scanner
           onScan={(result) =>
@@ -133,7 +123,7 @@ function ScannerSection({
 
 function WelcomeSection({ guest }: { guest: Guest | null }) {
   return (
-    <div className="w-1/2 font-forum items-center pt-5 text-center flex flex-col justify-between ">
+    <div className="sm:w-1/2 font-forum items-center pt-5 text-center flex flex-col justify-between ">
       <div className="">
         <h1 className="text-3xl text-primary">Welcome</h1>
         <p className="text-secondary">To The Wedding of Aura & Keanu</p>

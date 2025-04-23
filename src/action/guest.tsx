@@ -8,7 +8,9 @@ export const getGuests = async () => {
 
     const { data, error } = await supabase
       .from("guests")
-      .select("*, relation(name), attendance(*)");
+      .select("*, relation(name), attendance(*)")
+
+    console.log(data)
 
     if (error) {
       console.error("Error fetching guests:", error);
@@ -18,8 +20,8 @@ export const getGuests = async () => {
     return data;
   } catch (err) {
     console.error("Unexpected error fetching guests:", err);
-    return [];
-  }
+  return [];
+}
 };
 
 export const addGuest = async ({

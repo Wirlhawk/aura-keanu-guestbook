@@ -62,6 +62,7 @@ export type Database = {
       }
       guests: {
         Row: {
+          attendance: any
           created_at: string
           id: string
           kategori: Database["public"]["Enums"]["kategori"] | null

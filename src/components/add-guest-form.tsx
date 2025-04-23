@@ -21,6 +21,8 @@ import {
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import { addGuest } from "@/action/guest";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
 
 const categories = ["Online", "Fisik"];
 
@@ -31,6 +33,7 @@ const guest_relations = [
   { id: "4", name: "Ibu Nia" },
   { id: "5", name: "Bunda Winindya" },
   { id: "6", name: "Ayah Budi" },
+  { id: "7", name: "Ray (DEBUG ONLY)" },
 ];
 
 const formSchema = z.object({
@@ -41,24 +44,39 @@ const formSchema = z.object({
 });
 
 export default function AddGuestForm() {
+  const [isLoading, setIsLoading] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      name: "",
+      kategori: "",
+      relation_id: "",
+      vip: "",
+    },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      // toast.promise()
-      await addGuest({
-        name: values.name,
-        relationId: parseInt(values.relation_id),
-        vip: values.vip === "true",
-        category: values.kategori,
-      });
-
-      // toast.success(JSON.stringify(values, null, 2));
+      setIsLoading(true);
+      toast.promise(
+        addGuest({
+          name: values.name,
+          relationId: parseInt(values.relation_id),
+          vip: values.vip === "true",
+          category: values.kategori,
+        }),
+        {
+          loading: "Adding Guest",
+          success: "Guest Added!",
+          error: "Failed to add guest",
+        }
+      );
     } catch (error) {
       console.error("Form submission error", error);
       toast.error("Failed to submit the form. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -157,8 +175,12 @@ export default function AddGuestForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
-          Create Guest
+        <Button
+          type="submit"
+          className="w-full disabled:bg-primary"
+          disabled={isLoading}
+        >
+          {isLoading ? <Loader2 className="animate-spin" /> : "Add Guest"}
         </Button>
       </form>
     </Form>

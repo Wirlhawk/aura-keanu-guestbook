@@ -1,4 +1,4 @@
-import { BookUser, ScanLine, ShieldUser } from "lucide-react";
+import { BookUser, ScanLine, ShieldUser, UserPlus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -47,9 +47,17 @@ export default async function Home() {
                 className="text-primary w-full h-full"
                 strokeWidth={1.2}
               />
-              <h1 className="text-2xl tracking-widest text-secondary">
-                Guest
-              </h1>
+              <h1 className="text-2xl tracking-widest text-secondary">Guest List</h1>
+            </Link>
+            <Link
+              href="/admin/add"
+              className="w-48 aspect-square bg-white rounded-xl shadow-md flex flex-col items-center justify-center gap-5 p-5 active:bg-primary/50 transition-all"
+            >
+              <UserPlus
+                className="text-primary w-full h-full"
+                strokeWidth={1.2}
+              />
+              <h1 className="text-2xl tracking-widest text-secondary">Add Guest</h1>
             </Link>
           </div>
 

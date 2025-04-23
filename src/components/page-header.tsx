@@ -13,7 +13,7 @@ const PageHeader = ({
   title: string;
 }) => {
   return (
-    <div className="rounded-md border bg-white space-y-5 p-5 px-7">
+    <div className="rounded-md border bg-white space-y-5 p-5 px-7 pb-7">
       <div className="flex gap-5">
         <Button asChild variant={"outline"}>
           <Link href="/">

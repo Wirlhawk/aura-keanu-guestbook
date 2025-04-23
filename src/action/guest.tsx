@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { addAttendance } from "./attendance";
 
 export const getGuests = async () => {
   try {
@@ -8,9 +9,7 @@ export const getGuests = async () => {
 
     const { data, error } = await supabase
       .from("guests")
-      .select("*, relation(name), attendance(*)")
-
-    console.log(data)
+      .select("*, relation(name), attendance(*)");
 
     if (error) {
       console.error("Error fetching guests:", error);
@@ -20,8 +19,8 @@ export const getGuests = async () => {
     return data;
   } catch (err) {
     console.error("Unexpected error fetching guests:", err);
-  return [];
-}
+    return [];
+  }
 };
 
 export const addGuest = async ({
@@ -39,7 +38,7 @@ export const addGuest = async ({
     const supabase = await createClient();
     const id = Math.random().toString(36).substring(2, 7).toUpperCase();
 
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("guests")
       .insert({
         id,
@@ -48,15 +47,38 @@ export const addGuest = async ({
         vip,
         kategori: category,
       })
-      .select()
+      .select("id")
       .single();
 
     if (error) {
       console.error("Error creating guest:", error);
       return null;
     }
+
+    await addAttendance(data.id);
   } catch (err) {
     console.error("Unexpected error creating guest:", err);
     return null;
+  }
+};
+
+export const getGuestsCount = async () => {
+  try {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase
+      .from("guests")
+      .select("*", { count: "exact" });
+
+    if (error) {
+      console.error("Error fetching guests count:", error);
+      return 0;
+    }
+
+
+    return data.length;
+  } catch (err) {
+    console.error("Unexpected error fetching guests count:", err);
+    return 0;
   }
 };

@@ -97,6 +97,7 @@ export const columns: ColumnDef<Guest>[] = [
     },
   },
   {
+    id: "attendance",
     accessorKey: "attendance",
     cell: ({ row }) => {
       const attendance = (row.getValue("attendance") as Array<any>) || null;

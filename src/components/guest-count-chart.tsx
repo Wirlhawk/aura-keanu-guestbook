@@ -44,7 +44,7 @@ export default function GuestCountChart({
 
   return (
     <Card className="flex flex-col flex-1">
-      <CardHeader className="items-center pb-0 text-center">
+      <CardHeader className="items-center pb-0 text-center text-primary">
         <CardTitle>{name} Guest</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 pb-0 p-0">

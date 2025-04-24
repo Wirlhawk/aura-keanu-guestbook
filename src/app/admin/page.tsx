@@ -41,7 +41,7 @@ const Page = async () => {
       </div>
       <div className="space-y-2">
         <h1>Attended Guest</h1>
-        <div className="grid grid-cols-4 gap-5">
+        <div className="grid grid-cols-6 gap-5">
           {summary.map((sum, i) => (
             <GuestCountChart
               key={i}

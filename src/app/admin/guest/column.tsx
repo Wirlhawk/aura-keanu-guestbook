@@ -73,7 +73,7 @@ export const columns: ColumnDef<Guest>[] = [
     cell: ({ row }) => {
       const vip = row.getValue("vip") as boolean;
       return vip ? (
-        <Badge className="bg-yellow-300 text-yellow-800">VIP</Badge>
+        <Badge className="bg-yellow-300 text-yellow-800">VIP {vip}</Badge>
       ) : (
         <Badge className="bg-gray-300 text-gray-800 ">NON-VIP</Badge>
       );

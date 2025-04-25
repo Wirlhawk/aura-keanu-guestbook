@@ -101,7 +101,7 @@ export default function GuestCountChart({
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-md font-bold">
-        <div className="flex items-center gap-2 font-medium leading-none font-bold">
+        <div className="flex items-center gap-2 leading-none font-bold">
           <UsersRound className="h-4 w-4" /> Total Guest : {total}
         </div>
       </CardFooter>

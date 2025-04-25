@@ -89,6 +89,7 @@ export type Database = {
       }
       guests: {
         Row: {
+          checked_in: any
           attendance: any
           created_at: string
           id: string

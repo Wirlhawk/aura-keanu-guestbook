@@ -8,9 +8,11 @@ import { Guest } from "@/types/supabase";
 import { Button } from "@/components/ui/button";
 import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import dayjs from "dayjs";
 
 export const columns: ColumnDef<Guest>[] = [
     {
+        id: "NO",
         accessorKey: "NO",
         header: ({ column }) => {
             return (
@@ -31,8 +33,11 @@ export const columns: ColumnDef<Guest>[] = [
                 </Button>
             );
         },
-        cell: ({ row }) => {
-            return row.index + 1;
+        cell: ({ row, table }) => {
+            const dataIndex = table
+                .getCoreRowModel()
+                .rows.findIndex((r) => r.id === row.id);
+            return dataIndex + 1;
         },
     },
     {
@@ -79,7 +84,6 @@ export const columns: ColumnDef<Guest>[] = [
             );
         },
     },
-
     {
         accessorKey: "vip",
         cell: ({ row }) => {
@@ -112,52 +116,12 @@ export const columns: ColumnDef<Guest>[] = [
             );
         },
     },
-    // {
-    //     id: "attendance",
-    //     accessorKey: "attendance",
-    //     cell: ({ row }) => {
-    //         const attendance =
-    //             (row.getValue("attendance") as Array<any>) || null;
-
-    //         return attendance.length > 0 ? (
-    //             <Badge className="bg-green-300 text-green-800">Attended</Badge>
-    //         ) : (
-    //             <Badge className="bg-gray-300 text-gray-800">Not Attend</Badge>
-    //         );
-    //     },
-    //     header: ({ column }) => {
-    //         return (
-    //             <Button
-    //                 variant="ghost"
-    //                 onClick={() =>
-    //                     column.toggleSorting(column.getIsSorted() === "asc")
-    //                 }
-    //             >
-    //                 Attend
-    //                 {column.getIsSorted() === "asc" ? (
-    //                     <ArrowUp className="ml-2 h-4 w-4" />
-    //                 ) : column.getIsSorted() === "desc" ? (
-    //                     <ArrowDown className="ml-2 h-4 w-4" />
-    //                 ) : (
-    //                     <ArrowUpDown className="ml-2 h-4 w-4" />
-    //                 )}
-    //             </Button>
-    //         );
-    //     },
-    // },
     {
         id: "checked_in",
-        // cell: ({ row }) => {
-            // const checked_in = row.getValue("checked_in") as string;
-
-            // const attendance = row.original.attendance as Array<any>;
-            // const created_at = attendance?.[0]?.created_at;
-            // const checked_in = row.original.;
-            // const time = checked_in
-            //     ? dayjs(checked_in).format("hh:mm A")
-            //     : "N/A";
-            // return time;
-        // },
+        accessorKey: "checked_in",
+        cell: ({ row }) => {
+            return dayjs(row.original.checked_in).format("hh:mm | DD MMM ");
+        },
         header: ({ column }) => {
             return (
                 <Button

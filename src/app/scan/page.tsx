@@ -165,7 +165,7 @@ function GuestCard({ guest }: { guest: Guest }) {
                 <div className="bg-secondary flex flex-col items-center w-full py-5 px-4 gap-3">
                     <h2 className="text-lg text-white">Yth. Bpk/Ibu/Sdr/i</h2>
 
-                    {guest.vip === true ? (
+                    {guest.vip != 0 ? (
                         <div>
                             <h1 className="text-2xl  font- text-yellow-500">
                                 {guest.name}

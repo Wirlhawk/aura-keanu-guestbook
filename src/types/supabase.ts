@@ -35,6 +35,32 @@ export type Database = {
   }
   public: {
     Tables: {
+      attendance: {
+        Row: {
+          created_at: string
+          guest_id: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          guest_id: string
+          id?: string
+        }
+        Update: {
+          created_at?: string
+          guest_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attendance_guest_id_fkey"
+            columns: ["guest_id"]
+            isOneToOne: false
+            referencedRelation: "guests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       confirmation: {
         Row: {
           confirm: boolean | null
@@ -70,7 +96,7 @@ export type Database = {
           name: string | null
           phone: string | null
           relation_id: number | null
-          vip: boolean | null
+          vip: number | null
         }
         Insert: {
           created_at?: string
@@ -79,7 +105,7 @@ export type Database = {
           name?: string | null
           phone?: string | null
           relation_id?: number | null
-          vip?: boolean | null
+          vip?: number | null
         }
         Update: {
           created_at?: string
@@ -88,7 +114,7 @@ export type Database = {
           name?: string | null
           phone?: string | null
           relation_id?: number | null
-          vip?: boolean | null
+          vip?: number | null
         }
         Relationships: [
           {
@@ -155,7 +181,24 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_attendance_with_guests: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          attendance_id: string
+          guest_name: string
+          relation_name: string
+          vip: number
+          checked_in: string
+        }[]
+      }
+      get_relation_attendance_summary: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          name: string
+          total_attendance: number
+          total_guests: number
+        }[]
+      }
     }
     Enums: {
       guest_relation: "keanu" | "aura" | "nildasari" | "nia"

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import dayjs from "dayjs";
+// import dayjs from "dayjs";
 
 import { ColumnDef } from "@tanstack/react-table";
 import { Guest } from "@/types/supabase";
@@ -146,14 +146,18 @@ export const columns: ColumnDef<Guest>[] = [
     //     },
     // },
     {
-        accessorFn: (row) => row.attendance?.[0]?.created_at ?? null,
         id: "checked_in",
-        cell: ({ row }) => {
-            const attendance = row.original.attendance as Array<any>;
-            const created_at = attendance?.[0]?.created_at;
-            const time = dayjs(created_at).format("hh:mm A");
-            return time;
-        },
+        // cell: ({ row }) => {
+            // const checked_in = row.getValue("checked_in") as string;
+
+            // const attendance = row.original.attendance as Array<any>;
+            // const created_at = attendance?.[0]?.created_at;
+            // const checked_in = row.original.;
+            // const time = checked_in
+            //     ? dayjs(checked_in).format("hh:mm A")
+            //     : "N/A";
+            // return time;
+        // },
         header: ({ column }) => {
             return (
                 <Button

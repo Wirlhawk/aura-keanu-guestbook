@@ -225,71 +225,71 @@ export const columns: ColumnDef<Guest>[] = [
       );
     },
   },
-  {
-    accessorKey: "changeVip",
-    header: "makeVip",
-    cell: ({ row }) => {
-      const id = row.original.id;
-      return (
-        <div className="flex gap-2">
-          <Button
-            size={"sm"}
-            variant="secondary"
-            className="text-white"
-            onClick={() =>
-              toast.promise(updateGuestVIP({ id, vip: 0 }), {
-                loading: "Changing Guest VIP...",
-                success: "Guest VIP changed",
-                error: "Error, guest VIP could not be changed",
-              })
-            }
-          >
-            VIP 0
-          </Button>
-          <Button
-            size={"sm"}
-            variant="secondary"
-            className="text-white"
-            onClick={() =>
-              toast.promise(updateGuestVIP({ id, vip: 1 }), {
-                loading: "Changing Guest VIP...",
-                success: "Guest VIP changed",
-                error: "Error, guest VIP could not be changed",
-              })
-            }
-          >
-            VIP 1
-          </Button>
-          <Button
-            size={"sm"}
-            variant="secondary"
-            className="text-white"
-            onClick={() =>
-              toast.promise(updateGuestVIP({ id, vip: 2 }), {
-                loading: "Changing Guest VIP...",
-                success: "Guest VIP changed",
-                error: "Error, guest VIP could not be changed",
-              })
-            }
-          >
-            VIP 2
-          </Button>
-          <Button
-            size={"sm"}
-            variant="secondary"
-            className="text-white"
-            onClick={() =>
-              toast.promise(updateGuestVIP({ id, vip: 3 }), {
-                loading: "Changing Guest VIP...",
-                success: "Guest VIP changed",
-                error: "Error, guest VIP could not be changed",
-              })
-            }
-          >
-            VIP 3
-          </Button>
-        </div>
-      );
-    },
-  },
+  // {
+  //   accessorKey: "changeVip",
+  //   header: "makeVip",
+  //   cell: ({ row }) => {
+  //     const id = row.original.id;
+  //     return (
+  //       <div className="flex gap-2">
+  //         <Button
+  //           size={"sm"}
+  //           variant="secondary"
+  //           className="text-white"
+  //           onClick={() =>
+  //             toast.promise(updateGuestVIP({ id, vip: 0 }), {
+  //               loading: "Changing Guest VIP...",
+  //               success: "Guest VIP changed",
+  //               error: "Error, guest VIP could not be changed",
+  //             })
+  //           }
+  //         >
+  //           VIP 0
+  //         </Button>
+  //         <Button
+  //           size={"sm"}
+  //           variant="secondary"
+  //           className="text-white"
+  //           onClick={() =>
+  //             toast.promise(updateGuestVIP({ id, vip: 1 }), {
+  //               loading: "Changing Guest VIP...",
+  //               success: "Guest VIP changed",
+  //               error: "Error, guest VIP could not be changed",
+  //             })
+  //           }
+  //         >
+  //           VIP 1
+  //         </Button>
+  //         <Button
+  //           size={"sm"}
+  //           variant="secondary"
+  //           className="text-white"
+  //           onClick={() =>
+  //             toast.promise(updateGuestVIP({ id, vip: 2 }), {
+  //               loading: "Changing Guest VIP...",
+  //               success: "Guest VIP changed",
+  //               error: "Error, guest VIP could not be changed",
+  //             })
+  //           }
+  //         >
+  //           VIP 2
+  //         </Button>
+  //         <Button
+  //           size={"sm"}
+  //           variant="secondary"
+  //           className="text-white"
+  //           onClick={() =>
+  //             toast.promise(updateGuestVIP({ id, vip: 3 }), {
+  //               loading: "Changing Guest VIP...",
+  //               success: "Guest VIP changed",
+  //               error: "Error, guest VIP could not be changed",
+  //             })
+  //           }
+  //         >
+  //           VIP 3
+  //         </Button>
+  //       </div>
+  //     );
+  //   },
+  // },
 ];

@@ -10,6 +10,7 @@ import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import dayjs from "dayjs";
 import { removeAttendanceById } from "@/action/attendance";
+import toast from "react-hot-toast";
 
 export const columns: ColumnDef<Guest>[] = [
   {
@@ -143,7 +144,11 @@ export const columns: ColumnDef<Guest>[] = [
             variant="destructive"
             onClick={() => {
               // Handle delete action
-              removeAttendanceById(id);
+              toast.promise(removeAttendanceById(id), {
+                loading: "Adding guest to attend list",
+                success: "Guest added to attend list",
+                error: "error, guest could not be added",
+              });
             }}
           >
             Remove

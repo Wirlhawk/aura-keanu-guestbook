@@ -21,7 +21,6 @@ import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { addAttendance, removeAttendance } from "@/action/attendance";
 import toast from "react-hot-toast";
-import { updateGuestVIP } from "@/action/guest";
 
 export const columns: ColumnDef<Guest>[] = [
   {
